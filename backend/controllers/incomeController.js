@@ -29,7 +29,7 @@ exports.addIncome = async(req, res) => {
     }
 }
 
-// Add Income Source
+// Get All Income
 exports.getAllIncome = async(req, res) => {
     const userId = req.user.id;
 
@@ -41,7 +41,7 @@ exports.getAllIncome = async(req, res) => {
     }
 }
 
-// Add Income Source
+// Delete Income 
 exports.deleteIncome = async(req, res) => {
     try{
         await Income.findByIdAndDelete(req.params.id);
@@ -51,7 +51,7 @@ exports.deleteIncome = async(req, res) => {
     }
 }
 
-// Add Income Source
+// Download Income Excel 
 exports.downloadIncomeExcel = async(req, res) => {
     const userId = req.user.id;
 

@@ -1,21 +1,18 @@
 import React from 'react';
 import {
-    BarChart,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
     ResponsiveContainer,
-    Cell,
-    Bar
+    AreaChart,
+    Area
 } from 'recharts';
 
-const CustomBarChart = ({data}) => {
 
-    const getBarColor = (index) => {
-        return index % 2 === 0 ? "#875cf5" : "#cfbefb";
-    }
+const CustomLineChart = ({data}) => {
+
+    console.log("data",data);
 
     const CustomTooltip = ({active, payload}) => {
         if(active && payload && payload.length){
@@ -33,27 +30,26 @@ const CustomBarChart = ({data}) => {
   return (
     <div className='bg-white mt-6'>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
-            <CartesianGrid stroke="none"/>
-            <XAxis dataKey="month" tick={{fontSize: 12, fill:"#555"}} stroke='none'/>
-            <YAxis tick={{fontSize:12, fill:"#555"}} stroke='none'/>
+        <AreaChart data={data}>
+        <defs>
+        <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor='#875cf5' stopOpacity={0.4}/>
+                <stop offset="95%" stopColor='#875cf5'
+                stopOpacity={0}/>
+            </linearGradient>
+       </defs>
 
-            <Tooltip content={CustomTooltip}/>
+       <CartesianGrid stroke="none"/>
+       <XAxis dataKey="month" tick={{ fontSize: 12, fill: "#555"}} stroke="none"/>
+       <YAxis tick={{fontSize:12, fill:"#555"}} stroke="none"/>
 
-            <Bar
-            dataKey="amount"
-            fill="#FF8042"
-            radius={[10,10,0,0]}
-            activeDot={{r:8, fill:"yellow"}}
-            activeStyle={{fill: "green"}}>
-                {data.map((entry, index) => (
-                    <Cell key={index} fill={getBarColor(index)}/>
-                ))}
-            </Bar>
-        </BarChart>
+       <Tooltip content={<CustomTooltip/>}/>
+
+       <Area type="monotone" dataKey="amount" stroke="#875cf5" fill="url(#incomeGradient)" strokeWidth={3} dot={{r:3 , fill: "#ab8df8"}}/>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   )
 }
 
-export default CustomBarChart
+export default CustomLineChart
